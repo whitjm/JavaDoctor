@@ -12,10 +12,10 @@ from app.config import settings
 def get_embeddings() -> OllamaEmbeddings:
     """返回单例嵌入模型。bge-m3 输出 1024 维向量。
 
-    keep_alive=30m：嵌入模型常驻显存，避免每次检索都与对话模型互相挤出重载。
+    keep_alive=24h：嵌入模型常驻显存，闲置不会被卸载。
     """
     return OllamaEmbeddings(
         model=settings.embedding_model,
         base_url=settings.ollama_base_url,
-        keep_alive=1800,  # 秒；OllamaEmbeddings 只接受整数，不认 "30m" 字符串
+        keep_alive=86400,  # 秒(24h)；防止闲置后被卸载，与LLM模型保持一致
     )

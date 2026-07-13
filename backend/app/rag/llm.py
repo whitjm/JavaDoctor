@@ -20,7 +20,7 @@ def get_llm() -> ChatOllama:
     - temperature 调低：答案贴合知识库、减少发散。
     - num_ctx=6144：容纳 5 个父块上下文即可，过大会拖慢 prompt 处理。
     - num_predict=2048：给足生成长度，避免面向小白的详细讲解被中途截断。
-    - keep_alive=30m：模型常驻显存，避免与嵌入模型反复互相挤出重载(本机显存瓶颈)。
+    - keep_alive=24h：模型常驻显存(RTX 4070 8GB 绰绰有余)，闲置不会被卸载。
     """
     return ChatOllama(
         model=settings.llm_model,
@@ -29,6 +29,6 @@ def get_llm() -> ChatOllama:
         num_ctx=6144,
         num_predict=2048,
         reasoning=False,
-        keep_alive=1800,  # 秒，模型常驻显存
+        keep_alive=86400,  # 秒(24h)，防止闲置时被Ollama卸载导致下次请求卡死
         timeout=120,      # 秒，单次推理超时，防止压测时请求堆积
     )
