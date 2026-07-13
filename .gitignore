@@ -8,7 +8,7 @@ venv/
 # 环境与密钥
 backend/.env
 
-# 数据（本地生成）
+# 数据（本地生成）—— 向量库已首次上传，之后排除不再更新
 data/
 backend/data/
 
