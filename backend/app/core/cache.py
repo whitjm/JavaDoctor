@@ -9,14 +9,18 @@ import time
 from app.config import settings
 
 _redis_client = None
+_redis_failed = False  # 连接失败时置 True，避免每次请求重试超时
 _memory_store: dict[str, tuple[str, float | None]] = {}
 
 
 def _get_redis():
-    global _redis_client
+    global _redis_client, _redis_failed
     if _redis_client is not None:
         return _redis_client
+    if _redis_failed:  # 之前连过但失败了，不再重试
+        return None
     if not settings.redis_url:
+        _redis_failed = True
         return None
     try:
         import redis
@@ -26,6 +30,7 @@ def _get_redis():
         _redis_client = client
         return client
     except Exception:
+        _redis_failed = True  # 记下失败，后续直接走内存缓存
         return None
 
 

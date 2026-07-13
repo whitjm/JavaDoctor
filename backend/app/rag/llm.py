@@ -30,4 +30,5 @@ def get_llm() -> ChatOllama:
         num_predict=2048,
         reasoning=False,
         keep_alive=1800,  # 秒，模型常驻显存
+        timeout=120,      # 秒，单次推理超时，防止压测时请求堆积
     )
