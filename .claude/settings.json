@@ -1,7 +1,49 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pip show *)"
+      "Bash(pip *)",
+      "Bash(python *)",
+      "Bash(PYTHONIOENCODING=utf-8 python *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(cd e:/ItHeima/JavaDoctor/backend && python *)",
+      "Bash(cd e:/ItHeima/JavaDoctor/frontend && npm *)",
+      "Bash(cd e:/ItHeima/JavaDoctor/backend && PYTHONIOENCODING=utf-8 python *)",
+      "Bash(curl *)",
+      "Bash(ollama *)",
+      "Bash(git *)",
+      "Bash(netstat *)",
+      "Bash(tasklist *)",
+      "Bash(taskkill *)",
+      "Bash(rm *)",
+      "Bash(mkdir *)",
+      "Bash(ls *)",
+      "Bash(echo *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(sleep *)",
+      "Bash(cmd //c *)",
+      "Bash(du *)",
+      "Bash(wc *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(node .claude/hooks/check-commit.js)",
+      "Read(C:\\Users\\WhiteJM\\.claude\\projects\\e--ItHeima-JavaDoctor\\**)",
+      "Read(C:\\Users\\WhiteJM\\.ssh\\**)",
+      "WebFetch(domain:docs.claude.com)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/check-commit.js"
+          }
+        ]
+      }
     ]
   }
 }
