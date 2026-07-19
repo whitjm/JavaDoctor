@@ -1,1 +1,1 @@
-PASS 2026-07-13 14:30 | 无高危安全问题;另有 2 处注释/代码不匹配提醒(llm.py:23, embeddings.py:15 的 docstring 写 keep_alive=30m 但实际已改为 86400)
+PASS 2026-07-19 | 无高危安全问题; 1处bug(chat.py:159 CHITCHAT_PROMPT_ZH引用错误), 1处注释不一致(router.py:42)

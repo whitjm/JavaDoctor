@@ -60,7 +60,8 @@ def stream_answer(
     # 1.5 意图路由：闲聊/自我介绍走人设直答，不检索(更快、更像助手)
     if router_mod.is_chitchat(question):
         yield {"event": "citations", "data": []}
-        yield from _stream_chitchat(db, conv, question)
+        lang = router_mod.detect_language(question)
+        yield from _stream_chitchat(db, conv, question, lang)
         return
 
     # 2. 检索 + 组装引用
@@ -127,10 +128,14 @@ def stream_answer(
 
 
 def _stream_chitchat(
-    db: Session, conv: Conversation, question: str
+    db: Session, conv: Conversation, question: str, lang: str = "zh"
 ) -> Iterator[dict]:
-    """闲聊/自我介绍：用人设直答，不检索、不引用。"""
-    messages = [SystemMessage(content=prompt_mod.CHITCHAT_PROMPT)]
+    """闲聊/自我介绍：用人设直答，不检索、不引用。按语言选 prompt。"""
+    system_prompt = (
+        prompt_mod.CHITCHAT_PROMPT_EN if lang == "en"
+        else prompt_mod.CHITCHAT_PROMPT
+    )
+    messages = [SystemMessage(content=system_prompt)]
     messages.extend(_history_messages(conv))
     messages.append(HumanMessage(content=question))
 
